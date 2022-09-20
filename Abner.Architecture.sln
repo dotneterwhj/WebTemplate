@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abner.Application", "src\Abner.Application\Abner.Application.csproj", "{A4F49A5D-309B-4F2F-8DA0-AE515CA96856}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abner.Application", "src\Abner.Application\Abner.Application.csproj", "{A4F49A5D-309B-4F2F-8DA0-AE515CA96856}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abner.DbMigrator", "src\Abner.DbMigrator\Abner.DbMigrator.csproj", "{D5BF639B-518B-4EED-8400-67D14669161E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abner.DbMigrator", "src\Abner.DbMigrator\Abner.DbMigrator.csproj", "{D5BF639B-518B-4EED-8400-67D14669161E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abner.Domain", "src\Abner.Domain\Abner.Domain.csproj", "{39730D75-67E0-4CE3-9080-8F449D27FE5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abner.Domain", "src\Abner.Domain\Abner.Domain.csproj", "{39730D75-67E0-4CE3-9080-8F449D27FE5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abner.Domain.Shared", "src\Abner.Domain.Shared\Abner.Domain.Shared.csproj", "{855097E9-6DC8-462D-9F3A-F33B2F48E691}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abner.Domain.Shared", "src\Abner.Domain.Shared\Abner.Domain.Shared.csproj", "{855097E9-6DC8-462D-9F3A-F33B2F48E691}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abner.EntityFrameworkCore", "src\Abner.EntityFrameworkCore\Abner.EntityFrameworkCore.csproj", "{27833143-940E-44CE-A3C9-41FACD9E1C5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abner.EntityFrameworkCore", "src\Abner.EntityFrameworkCore\Abner.EntityFrameworkCore.csproj", "{27833143-940E-44CE-A3C9-41FACD9E1C5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abner.Api.Host", "src\Abner.Api.Host\Abner.Api.Host.csproj", "{06493A58-CA7F-4823-B3C9-F713EEA61604}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abner.Api.Host", "src\Abner.Api.Host\Abner.Api.Host.csproj", "{06493A58-CA7F-4823-B3C9-F713EEA61604}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Domain", "1.Domain", "{51F4C038-4257-4DC7-A337-5DF75240BCA8}"
 EndProject
@@ -23,13 +23,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Infrastructure", "3.Infra
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Presentation", "4.Presentation", "{AB229C5A-8065-42AB-9D9B-385C8F686493}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.Core", "0.Core", "{F9186391-0C3C-4698-937F-F01860733E83}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abner.Domain.Core", "src\Shared\Abner.Domain.Core\Abner.Domain.Core.csproj", "{0C6D0EAD-669B-4F42-8E49-81D9C4B9A833}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abner.Infrastructure.Core", "src\Shared\Abner.Infrastructure.Core\Abner.Infrastructure.Core.csproj", "{1B4E4D50-5EB9-4882-85C4-4E0C59A067C3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{A4F49A5D-309B-4F2F-8DA0-AE515CA96856}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -56,6 +59,17 @@ Global
 		{06493A58-CA7F-4823-B3C9-F713EEA61604}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06493A58-CA7F-4823-B3C9-F713EEA61604}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06493A58-CA7F-4823-B3C9-F713EEA61604}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C6D0EAD-669B-4F42-8E49-81D9C4B9A833}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C6D0EAD-669B-4F42-8E49-81D9C4B9A833}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C6D0EAD-669B-4F42-8E49-81D9C4B9A833}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C6D0EAD-669B-4F42-8E49-81D9C4B9A833}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B4E4D50-5EB9-4882-85C4-4E0C59A067C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B4E4D50-5EB9-4882-85C4-4E0C59A067C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B4E4D50-5EB9-4882-85C4-4E0C59A067C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B4E4D50-5EB9-4882-85C4-4E0C59A067C3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A4F49A5D-309B-4F2F-8DA0-AE515CA96856} = {D067DAD3-E24A-42FB-9D9D-D617DFFA40B1}
@@ -64,5 +78,10 @@ Global
 		{855097E9-6DC8-462D-9F3A-F33B2F48E691} = {51F4C038-4257-4DC7-A337-5DF75240BCA8}
 		{27833143-940E-44CE-A3C9-41FACD9E1C5A} = {1DA8F8F5-089C-48A5-821C-913D5DB00B16}
 		{06493A58-CA7F-4823-B3C9-F713EEA61604} = {AB229C5A-8065-42AB-9D9B-385C8F686493}
+		{0C6D0EAD-669B-4F42-8E49-81D9C4B9A833} = {F9186391-0C3C-4698-937F-F01860733E83}
+		{1B4E4D50-5EB9-4882-85C4-4E0C59A067C3} = {F9186391-0C3C-4698-937F-F01860733E83}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0B52D807-0CF0-416A-BB99-31A8A3875AD2}
 	EndGlobalSection
 EndGlobal

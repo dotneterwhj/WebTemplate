@@ -5,7 +5,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="DotNetCore.CAP" Version="6.2.0" />
+    <PackageReference Include="DotNetCore.CAP.MySql" Version="6.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.9" />
+    <PackageReference Include="MediatR" Version="10.0.1" />
   </ItemGroup>
 
   <PropertyGroup>

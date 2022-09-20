@@ -13,6 +13,26 @@ namespace Abner.Domain.Core
         {
             return $"[ENTITY: {GetType().Name}] Keys = {string.Join(',', GetKeys())}";
         }
+
+        private List<DomainEvent> _domainEvents;
+
+        public IReadOnlyCollection<DomainEvent> DomainEvents => _domainEvents?.AsReadOnly();
+
+        public void AddDomainEvent(DomainEvent domainEventItem)
+        {
+            _domainEvents = _domainEvents ?? new List<DomainEvent>();
+            _domainEvents.Add(domainEventItem);
+        }
+
+        public void RemoveDomainEvent(DomainEvent domainEventItem)
+        {
+            _domainEvents?.Remove(domainEventItem);
+        }
+
+        public void ClearDomainEvents()
+        {
+            _domainEvents?.Clear();
+        }
     }
 
     public abstract class Entity<TKey> : Entity, IEntity<TKey>
@@ -41,25 +61,6 @@ namespace Abner.Domain.Core
             return $"[ENTITY: {GetType().Name}] Id = {Id}";
         }
 
-        private List<DomainEvent> _domainEvents;
-
-        public IReadOnlyCollection<DomainEvent> DomainEvents => _domainEvents?.AsReadOnly();
-
-        public void AddDomainEvent(DomainEvent domainEventItem)
-        {
-            _domainEvents = _domainEvents ?? new List<DomainEvent>();
-            _domainEvents.Add(domainEventItem);
-        }
-
-        public void RemoveDomainEvent(DomainEvent domainEventItem)
-        {
-            _domainEvents?.Remove(domainEventItem);
-        }
-
-        public void ClearDomainEvents()
-        {
-            _domainEvents?.Clear();
-        }
 
         public bool IsTransient()
         {
