@@ -1,0 +1,16 @@
+{
+    "$schema": "http://json.schemastore.org/template",
+    "author": "abner",
+    "classifications": [
+        "Web/WebAPI"
+    ],
+    "identity": "Abner.WebTemplate.CSharp",
+    "name": "ASP.NET Core Abner Web Application",
+    "shortName": "abner",
+    "tags": {
+        "language": "C#",
+        "type": "project"
+    },
+    "sourceName": "Abner",
+    "preferNameDirectory": true
+}
