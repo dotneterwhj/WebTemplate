@@ -8,7 +8,7 @@ namespace Abner.Domain.Core
     public interface IRepository
     { }
 
-    public interface IRepository<TEntity> : IReadOnlyRepository<TEntity>
+    public interface IRepository<TEntity> : IRepository, IReadOnlyRepository<TEntity>
         where TEntity : class, IEntity
     {
         IUnitOfWork UnitOfWork { get; }
@@ -59,7 +59,7 @@ namespace Abner.Domain.Core
         Task DeleteManyAsync(List<TEntity> entities, CancellationToken cancellationToken = default);
     }
 
-    public interface IRepository<TKey, TEntity> : IRepository<TEntity>, IReadOnlyRepository<TKey, TEntity>
+    public interface IRepository<TKey, TEntity> : IRepository, IRepository<TEntity>, IReadOnlyRepository<TKey, TEntity>
         where TEntity : class, IEntity<TKey>
     {
         /// <summary>

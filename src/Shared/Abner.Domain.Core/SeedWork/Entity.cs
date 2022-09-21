@@ -5,8 +5,15 @@ using System.Threading.Tasks;
 
 namespace Abner.Domain.Core
 {
+    /// <summary>
+    /// 实体
+    /// </summary>
     public abstract class Entity : IEntity
     {
+        /// <summary>
+        /// 联合主键
+        /// </summary>
+        /// <returns></returns>
         public abstract object[] GetKeys();
 
         public override string ToString()
@@ -35,10 +42,17 @@ namespace Abner.Domain.Core
         }
     }
 
+    /// <summary>
+    /// 实体
+    /// </summary>
+    /// <typeparam name="TKey"></typeparam>
     public abstract class Entity<TKey> : Entity, IEntity<TKey>
     {
         int? _requestedHashCode;
 
+        /// <summary>
+        /// 单主键
+        /// </summary>
         public virtual TKey Id { get; protected set; }
 
         protected Entity()

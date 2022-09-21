@@ -10,7 +10,7 @@ namespace Abner.Infrastructure.Core
 {
     public static class MediatRExtension
     {
-        public static async Task DispatchDomainEventsAsync(this IMediator mediator, DbContext ctx)
+        public static async Task DispatchDomainEventsAsync(this IMediator mediator, DbContext ctx, CancellationToken cancellationToken = default(CancellationToken))
         {
             var domainEntities = ctx.ChangeTracker
                         .Entries<Entity>()
@@ -24,7 +24,7 @@ namespace Abner.Infrastructure.Core
                 .ForEach(entity => entity.Entity.ClearDomainEvents());
 
             foreach (var domainEvent in domainEvents)
-                await mediator.Publish(domainEvent);
+                await mediator.Publish(domainEvent, cancellationToken);
         }
     }
 }

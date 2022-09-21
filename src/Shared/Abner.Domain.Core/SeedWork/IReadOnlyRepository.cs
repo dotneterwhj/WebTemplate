@@ -15,7 +15,7 @@ namespace Abner.Domain.Core
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<List<TEntity>> GetListAsync(CancellationToken cancellationToken = default);
+        Task<List<TEntity>> GetListAsync(bool includeDetails = false, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// 获取多条数据
@@ -45,7 +45,7 @@ namespace Abner.Domain.Core
         /// </summary>
         /// <param name="skipCount">跳过的条数</param>
         /// <param name="maxResultCount">最大取几条</param>
-        /// <param name="sorting">排序</param>
+        /// <param name="sorting">一个表达式字符串，用于指示排序依据的值</param>
         /// <param name="includeDetails">是否包含导航属性</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
