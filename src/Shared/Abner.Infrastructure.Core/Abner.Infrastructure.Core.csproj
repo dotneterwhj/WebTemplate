@@ -1,21 +1,37 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <ItemGroup>
-    <ProjectReference Include="..\Abner.Domain.Core\Abner.Domain.Core.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Abner.Domain.Core\Abner.Domain.Core.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="DotNetCore.CAP" Version="6.2.0" />
-    <PackageReference Include="DotNetCore.CAP.MySql" Version="6.2.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.9" />
-    <PackageReference Include="MediatR" Version="10.0.1" />
-    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.20" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="DotNetCore.CAP" Version="6.2.0" />
+		<PackageReference Include="DotNetCore.CAP.MySql" Version="6.2.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.9" />
+		<PackageReference Include="MediatR" Version="10.0.1" />
+		<PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.20" />
+	</ItemGroup>
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageId>Abner.Infrastructure.Core</PackageId>
+		<Version>6.0</Version>
+		<Authors>Abner</Authors>
+		<Company>Abner</Company>
+		<PackageProjectUrl>https://github.com/dotneterwhj/WebTemplate/tree/clean-architecture/src/Shared/Abner.Infrastructure.Core</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/dotneterwhj/WebTemplate</RepositoryUrl>
+		<PackageVersion>6.0</PackageVersion>
+		<!--<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<PackageReadmeFile>README.md</PackageReadmeFile>-->
+		<Description>Infrastructure.Core</Description>
+	</PropertyGroup>
+
+	<!--<ItemGroup>
+		<None Include="..\..\README.md" Pack="true" PackagePath="\"/>
+		<None Include="..\..\LICENSE" Pack="true" PackagePath="\"/>
+	</ItemGroup>-->
 
 </Project>

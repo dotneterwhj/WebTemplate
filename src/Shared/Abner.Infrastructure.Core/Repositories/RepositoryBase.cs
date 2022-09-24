@@ -44,8 +44,8 @@ namespace Abner.Infrastructure.Core
         public async Task<List<TEntity>> GetListAsync(bool includeDetails = false, CancellationToken cancellationToken = default)
         {
             return includeDetails ?
-                await GetDbSet().ToListAsync(cancellationToken) :
-                await (await IncludeDetailsAsync(cancellationToken)).ToListAsync(cancellationToken);
+                await (await IncludeDetailsAsync(cancellationToken)).ToListAsync(cancellationToken) :
+                await GetDbSet().ToListAsync(cancellationToken);
         }
 
         public async Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> predicate, bool includeDetails = false, CancellationToken cancellationToken = default)
@@ -66,10 +66,13 @@ namespace Abner.Infrastructure.Core
         public async Task<List<TEntity>> GetPageListAsync(int skipCount, int maxResultCount, string sorting, bool includeDetails = false, CancellationToken cancellationToken = default)
         {
             var queryable = includeDetails ?
-                GetQueryable() :
-                await IncludeDetailsAsync(cancellationToken);
+                await IncludeDetailsAsync(cancellationToken) :
+                GetQueryable();
 
-            return await queryable.OrderByIf(!string.IsNullOrEmpty(sorting), sorting).PageBy(skipCount, maxResultCount).ToListAsync();
+            return await queryable
+                        .OrderByIf(!string.IsNullOrEmpty(sorting), sorting)
+                        .PageBy(skipCount, maxResultCount)
+                        .ToListAsync();
         }
 
         public Task<IQueryable<TEntity>> IncludeDetailsAsync(CancellationToken cancellationToken = default)
@@ -158,4 +161,41 @@ namespace Abner.Infrastructure.Core
         }
 
     }
+
+
+    public abstract class RepositoryBase<TKey, TEntity> : RepositoryBase<TEntity>, IRepository<TKey, TEntity>
+        where TEntity : class, IEntity<TKey>
+    {
+        protected RepositoryBase(EFCoreContext dbContext) : base(dbContext)
+        {
+        }
+
+        public async Task<bool> DeleteAsync(TKey id, CancellationToken cancellationToken = default)
+        {
+            var entity = await base.GetDbSet().FindAsync(id, cancellationToken);
+
+            if (entity != null)
+                base.GetDbSet().Remove(entity);
+
+            return true;
+        }
+
+        public async Task<TEntity> FindAsync(TKey id, bool includeDetails = false, CancellationToken cancellationToken = default)
+        {
+            return includeDetails ?
+                await (await base.IncludeDetailsAsync(cancellationToken)).FirstOrDefaultAsync(t => t.Id.Equals(id), cancellationToken) :
+                await base.GetDbSet().FindAsync(new object[] { id }, cancellationToken);
+        }
+
+        public async Task<TEntity> GetAsync(TKey id, bool includeDetails = false, CancellationToken cancellationToken = default)
+        {
+            var entity = await FindAsync(id, includeDetails, cancellationToken);
+            if (entity == null)
+            {
+                throw new KeyNotFoundException(nameof(id));
+            }
+            return entity;
+        }
+    }
+
 }
