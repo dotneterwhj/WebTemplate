@@ -7,7 +7,7 @@ namespace Abner.Domain.Core
 {
     public interface ISoftDelete
     {
-        bool IsSoftDeleted { get; }
+        bool IsDeleted { get; }
 
         void SoftDelete();
     }

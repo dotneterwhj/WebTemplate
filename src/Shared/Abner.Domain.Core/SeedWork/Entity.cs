@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 namespace Abner.Domain.Core
 {
     /// <summary>
-    /// ÊµÌå
+    /// Êµï¿½ï¿½
     /// </summary>
     public abstract class Entity : IEntity
     {
         /// <summary>
-        /// ÁªºÏÖ÷¼ü
+        /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         /// </summary>
         /// <returns></returns>
         public abstract object[] GetKeys();
@@ -43,7 +43,7 @@ namespace Abner.Domain.Core
     }
 
     /// <summary>
-    /// ÊµÌå
+    /// Êµï¿½ï¿½
     /// </summary>
     /// <typeparam name="TKey"></typeparam>
     public abstract class Entity<TKey> : Entity, IEntity<TKey>
@@ -51,7 +51,7 @@ namespace Abner.Domain.Core
         int? _requestedHashCode;
 
         /// <summary>
-        /// µ¥Ö÷¼ü
+        /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         /// </summary>
         public virtual TKey Id { get; protected set; }
 

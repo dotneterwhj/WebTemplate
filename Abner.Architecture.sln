@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abner.Domain.Core", "src\Sh
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abner.Infrastructure.Core", "src\Shared\Abner.Infrastructure.Core\Abner.Infrastructure.Core.csproj", "{1B4E4D50-5EB9-4882-85C4-4E0C59A067C3}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abner.Application.Core", "src\Shared\Abner.Application.Core\Abner.Application.Core.csproj", "{1974D39F-65C4-42F4-9084-A6FEB9135A9A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,10 @@ Global
 		{1B4E4D50-5EB9-4882-85C4-4E0C59A067C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B4E4D50-5EB9-4882-85C4-4E0C59A067C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B4E4D50-5EB9-4882-85C4-4E0C59A067C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1974D39F-65C4-42F4-9084-A6FEB9135A9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1974D39F-65C4-42F4-9084-A6FEB9135A9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1974D39F-65C4-42F4-9084-A6FEB9135A9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1974D39F-65C4-42F4-9084-A6FEB9135A9A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,6 +86,7 @@ Global
 		{06493A58-CA7F-4823-B3C9-F713EEA61604} = {AB229C5A-8065-42AB-9D9B-385C8F686493}
 		{0C6D0EAD-669B-4F42-8E49-81D9C4B9A833} = {F9186391-0C3C-4698-937F-F01860733E83}
 		{1B4E4D50-5EB9-4882-85C4-4E0C59A067C3} = {F9186391-0C3C-4698-937F-F01860733E83}
+		{1974D39F-65C4-42F4-9084-A6FEB9135A9A} = {F9186391-0C3C-4698-937F-F01860733E83}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0B52D807-0CF0-416A-BB99-31A8A3875AD2}

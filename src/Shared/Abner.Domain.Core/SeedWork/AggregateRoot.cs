@@ -19,11 +19,11 @@ namespace Abner.Domain.Core
         public DateTime? DeletionTime { get; private set; }
         public int DeletorId { get; private set; }
 
-        public bool IsSoftDeleted { get; private set; }
+        public bool IsDeleted { get; private set; }
 
         public void SoftDelete()
         {
-            this.IsSoftDeleted = true;
+            this.IsDeleted = true;
             this.DeletionTime = DateTime.Now;
         }
 
@@ -44,11 +44,11 @@ namespace Abner.Domain.Core
         public DateTime? DeletionTime { get; private set; }
         public TKey DeletorId { get; private set; }
 
-        public bool IsSoftDeleted { get; private set; }
+        public bool IsDeleted { get; private set; }
 
         public void SoftDelete()
         {
-            this.IsSoftDeleted = true;
+            this.IsDeleted = true;
             this.DeletionTime = DateTime.Now;
         }
 

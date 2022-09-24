@@ -10,6 +10,7 @@
 
  <ItemGroup>
     <ProjectReference Include="..\Abner.Domain.Shared\Abner.Domain.Shared.csproj" />
+    <ProjectReference Include="..\Shared\Abner.Domain.Core\Abner.Domain.Core.csproj" />
  </ItemGroup>
  
 </Project>

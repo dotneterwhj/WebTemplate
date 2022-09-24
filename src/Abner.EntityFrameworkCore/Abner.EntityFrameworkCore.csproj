@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Abner.Domain\Abner.Domain.csproj" />
+    <ProjectReference Include="..\Shared\Abner.Infrastructure.Core\Abner.Infrastructure.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

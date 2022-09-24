@@ -95,9 +95,55 @@ namespace Abner.Infrastructure.Core
 
             // After executing this line all the changes (from the Command Handler and Domain Event Handlers) 
             // performed through the DbContext will be committed
-            var result = await base.SaveChangesAsync(cancellationToken);
+            var result = await SaveChangesAsync(cancellationToken);
+
             return true;
         }
 
+        public override int SaveChanges()
+        {
+            OnBeforeSaving();
+            return base.SaveChanges();
+        }
+
+        public override int SaveChanges(bool acceptAllChangesOnSuccess)
+        {
+            OnBeforeSaving();
+            return base.SaveChanges(acceptAllChangesOnSuccess);
+        }
+
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+        {
+            OnBeforeSaving();
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            OnBeforeSaving();
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
+        private void OnBeforeSaving()
+        {
+            // 标记软删除但未标记硬删除
+            var softDeletes = ChangeTracker.Entries<Entity>()
+                .Where(e => e.Entity.GetType().IsAssignableTo(typeof(ISoftDelete)) && !e.Entity.GetType().IsAssignableTo(typeof(IHardDelete)));
+
+            foreach (var entry in softDeletes)
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entry.CurrentValues[nameof(ISoftDelete.IsDeleted)] = false;
+                        break;
+
+                    case EntityState.Deleted:
+                        entry.State = EntityState.Modified;
+                        entry.CurrentValues[nameof(ISoftDelete.IsDeleted)] = true;
+                        break;
+                }
+            }
+        }
     }
 }

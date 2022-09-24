@@ -21,34 +21,34 @@ namespace Abner.Infrastructure.Core
             DbContext = dbContext;
         }
 
-        protected EFCoreContext GetDbContext()
+        protected virtual EFCoreContext GetDbContext()
         {
             return DbContext;
         }
 
-        protected DbSet<TEntity> GetDbSet()
+        protected virtual DbSet<TEntity> GetDbSet()
         {
-            return DbContext.Set<TEntity>();
+            return GetDbContext().Set<TEntity>();
         }
 
-        protected IQueryable<TEntity> GetQueryable()
+        protected virtual IQueryable<TEntity> GetQueryable()
         {
             return GetDbSet().AsQueryable();
         }
 
-        public Task<int> GetCountAsync(CancellationToken cancellationToken = default)
+        public virtual Task<int> GetCountAsync(CancellationToken cancellationToken = default)
         {
             return GetDbSet().CountAsync(cancellationToken);
         }
 
-        public async Task<List<TEntity>> GetListAsync(bool includeDetails = false, CancellationToken cancellationToken = default)
+        public virtual async Task<List<TEntity>> GetListAsync(bool includeDetails = false, CancellationToken cancellationToken = default)
         {
             return includeDetails ?
                 await (await IncludeDetailsAsync(cancellationToken)).ToListAsync(cancellationToken) :
                 await GetDbSet().ToListAsync(cancellationToken);
         }
 
-        public async Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> predicate, bool includeDetails = false, CancellationToken cancellationToken = default)
+        public virtual async Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> predicate, bool includeDetails = false, CancellationToken cancellationToken = default)
         {
             var result = GetDbSet().Where(predicate);
             if (includeDetails)
@@ -58,12 +58,12 @@ namespace Abner.Infrastructure.Core
             return await result.ToListAsync(cancellationToken);
         }
 
-        public Task<long> GetLongCountAsync(CancellationToken cancellationToken = default)
+        public virtual Task<long> GetLongCountAsync(CancellationToken cancellationToken = default)
         {
             return GetDbSet().LongCountAsync(cancellationToken);
         }
 
-        public async Task<List<TEntity>> GetPageListAsync(int skipCount, int maxResultCount, string sorting, bool includeDetails = false, CancellationToken cancellationToken = default)
+        public virtual async Task<List<TEntity>> GetPageListAsync(int skipCount, int maxResultCount, string sorting, bool includeDetails = false, CancellationToken cancellationToken = default)
         {
             var queryable = includeDetails ?
                 await IncludeDetailsAsync(cancellationToken) :
@@ -75,12 +75,12 @@ namespace Abner.Infrastructure.Core
                         .ToListAsync();
         }
 
-        public Task<IQueryable<TEntity>> IncludeDetailsAsync(CancellationToken cancellationToken = default)
+        public virtual Task<IQueryable<TEntity>> IncludeDetailsAsync(CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IQueryable<TEntity>> IncludeDetailsAsync(CancellationToken cancellationToken = default, params Expression<Func<TEntity, object>>[] propertySelectors)
+        public virtual Task<IQueryable<TEntity>> IncludeDetailsAsync(CancellationToken cancellationToken = default, params Expression<Func<TEntity, object>>[] propertySelectors)
         {
             var query = GetQueryable();
             if (propertySelectors != null)
@@ -99,7 +99,7 @@ namespace Abner.Infrastructure.Core
             return query;
         }
 
-        public async Task<TEntity> InsertAsync(TEntity entity, CancellationToken cancellationToken = default)
+        public virtual async Task<TEntity> InsertAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
             if (entity is IEntity<Guid> emptyIdEntity)
             {
@@ -119,7 +119,7 @@ namespace Abner.Infrastructure.Core
             //entity.Id = Guid.NewGuid();
         }
 
-        public async Task InsertManyAsync(List<TEntity> entities, CancellationToken cancellationToken = default)
+        public virtual async Task InsertManyAsync(List<TEntity> entities, CancellationToken cancellationToken = default)
         {
             foreach (var entity in entities)
             {
@@ -127,14 +127,14 @@ namespace Abner.Infrastructure.Core
             }
         }
 
-        public Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
+        public virtual Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
             var updatedEntity = GetDbSet().Update(entity).Entity;
 
             return Task.FromResult(updatedEntity);
         }
 
-        public async Task UpdateManyAsync(List<TEntity> entities, CancellationToken cancellationToken = default)
+        public virtual async Task UpdateManyAsync(List<TEntity> entities, CancellationToken cancellationToken = default)
         {
             foreach (var entity in entities)
             {
@@ -142,7 +142,7 @@ namespace Abner.Infrastructure.Core
             }
         }
 
-        public async Task<bool> DeleteAsync(TEntity entity)
+        public virtual async Task<bool> DeleteAsync(TEntity entity)
         {
             var existEntity = await GetDbSet().FindAsync(entity.GetKeys());
             if (existEntity != null)
@@ -152,7 +152,7 @@ namespace Abner.Infrastructure.Core
             return true;
         }
 
-        public async Task DeleteManyAsync(List<TEntity> entities, CancellationToken cancellationToken = default)
+        public virtual async Task DeleteManyAsync(List<TEntity> entities, CancellationToken cancellationToken = default)
         {
             foreach (var entity in entities)
             {
@@ -170,7 +170,7 @@ namespace Abner.Infrastructure.Core
         {
         }
 
-        public async Task<bool> DeleteAsync(TKey id, CancellationToken cancellationToken = default)
+        public virtual async Task<bool> DeleteAsync(TKey id, CancellationToken cancellationToken = default)
         {
             var entity = await base.GetDbSet().FindAsync(id, cancellationToken);
 
@@ -180,14 +180,14 @@ namespace Abner.Infrastructure.Core
             return true;
         }
 
-        public async Task<TEntity> FindAsync(TKey id, bool includeDetails = false, CancellationToken cancellationToken = default)
+        public virtual async Task<TEntity> FindAsync(TKey id, bool includeDetails = false, CancellationToken cancellationToken = default)
         {
             return includeDetails ?
                 await (await base.IncludeDetailsAsync(cancellationToken)).FirstOrDefaultAsync(t => t.Id.Equals(id), cancellationToken) :
                 await base.GetDbSet().FindAsync(new object[] { id }, cancellationToken);
         }
 
-        public async Task<TEntity> GetAsync(TKey id, bool includeDetails = false, CancellationToken cancellationToken = default)
+        public virtual async Task<TEntity> GetAsync(TKey id, bool includeDetails = false, CancellationToken cancellationToken = default)
         {
             var entity = await FindAsync(id, includeDetails, cancellationToken);
             if (entity == null)
