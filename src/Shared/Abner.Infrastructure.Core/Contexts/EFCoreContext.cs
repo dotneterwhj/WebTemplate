@@ -3,6 +3,7 @@ using DotNetCore.CAP;
 using MediatR;
 using Abner.Domain.Core;
 using Microsoft.EntityFrameworkCore.Storage;
+using Abner.Infrastructure.Core.Extensions;
 
 namespace Abner.Infrastructure.Core
 {
@@ -82,6 +83,13 @@ namespace Abner.Infrastructure.Core
         }
 
         #endregion
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // 启用全局软删除查询
+            modelBuilder.EnableGloableSoftDeleteQueryFilter();
+            base.OnModelCreating(modelBuilder);
+        }
 
         public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {

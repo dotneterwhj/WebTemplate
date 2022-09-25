@@ -1,11 +1,6 @@
 ﻿using Abner.Domain.Core;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Abner.Infrastructure.Core
 {
@@ -15,6 +10,8 @@ namespace Abner.Infrastructure.Core
         protected virtual EFCoreContext DbContext { get; set; }
 
         public virtual IUnitOfWork UnitOfWork => DbContext;
+
+        protected virtual IGuidGenerator GuidGenerator { get; set; } = new SimpleGuidGenerator();
 
         public RepositoryBase(EFCoreContext dbContext)
         {
@@ -115,8 +112,16 @@ namespace Abner.Infrastructure.Core
             {
                 return;
             }
-            // TODO 利用反射赋值
-            //entity.Id = Guid.NewGuid();
+
+            TrySetId(entity, () => GuidGenerator.Create());
+        }
+
+        public static void TrySetId<TKey>(
+           IEntity<TKey> entity,
+           Func<TKey> idFactory)
+        {
+            var idProperty = entity.GetType().GetProperties().FirstOrDefault(p => p.Name == nameof(entity.Id));
+            idProperty?.SetValue(entity, idFactory.Invoke());
         }
 
         public virtual async Task InsertManyAsync(List<TEntity> entities, CancellationToken cancellationToken = default)
