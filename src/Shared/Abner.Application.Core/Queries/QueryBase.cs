@@ -1,6 +1,5 @@
-﻿namespace Abner.Application.Core
+﻿namespace Abner.Application.Core;
+
+public abstract class QueryBase<TResult> : IQuery<TResult>
 {
-    public abstract class QueryBase<TResult> : IQuery<TResult>
-    {
-    }
 }

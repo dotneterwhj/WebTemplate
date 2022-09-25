@@ -1,3 +1,5 @@
+using Abner.Domain.BlogAggregate;
+using Abner.Domain.Core;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Abner.Api.Host.Controllers;
@@ -12,10 +14,12 @@ public class WeatherForecastController : ControllerBase
     };
 
     private readonly ILogger<WeatherForecastController> _logger;
+    private readonly IRepository<Blog> _repository;
 
-    public WeatherForecastController(ILogger<WeatherForecastController> logger)
+    public WeatherForecastController(ILogger<WeatherForecastController> logger, IRepository<Blog> repository)
     {
         _logger = logger;
+        _repository = repository;
     }
 
     [HttpGet(Name = "GetWeatherForecast")]

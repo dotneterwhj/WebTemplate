@@ -10,6 +10,12 @@
 
   <ItemGroup>
       <ProjectReference Include="..\Abner.Domain.Shared\Abner.Domain.Shared.csproj" />
+      <ProjectReference Include="..\Shared\Abner.Application.Core\Abner.Application.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Commands\" />
+    <Folder Include="Queries\" />
   </ItemGroup>
 
 </Project>

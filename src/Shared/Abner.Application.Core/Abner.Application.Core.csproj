@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Abner.Infrastructure.Core\Abner.Infrastructure.Core.csproj" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
+    <PackageReference Include="MediatR" Version="10.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Abner.Domain.Core\Abner.Domain.Core.csproj" />
   </ItemGroup>
 
 </Project>
