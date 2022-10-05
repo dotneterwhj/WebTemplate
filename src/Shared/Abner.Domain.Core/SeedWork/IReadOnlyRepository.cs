@@ -7,6 +7,10 @@ using System.Linq.Expressions;
 
 namespace Abner.Domain.Core
 {
+    /// <summary>
+    /// 只读仓储
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
     public interface IReadOnlyRepository<TEntity> : IRepository
         where TEntity : class, IEntity
     {

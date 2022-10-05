@@ -9,7 +9,6 @@ internal class CapModule : Autofac.Module
     protected override void Load(ContainerBuilder builder)
     {
         builder.RegisterAssemblyTypes(typeof(ICapPublisher).GetTypeInfo().Assembly)
-        .AsImplementedInterfaces()
-        .PropertiesAutowired();
+        .AsImplementedInterfaces();
     }
 }

@@ -58,8 +58,7 @@ internal class MediatorModule : Autofac.Module
         //        .InstancePerLifetimeScope();
 
         builder.RegisterAssemblyTypes(typeof(IMediator).GetTypeInfo().Assembly)
-            .AsImplementedInterfaces()
-            .PropertiesAutowired();
+            .AsImplementedInterfaces();
 
         var mediatrOpenTypes = new[]
         {

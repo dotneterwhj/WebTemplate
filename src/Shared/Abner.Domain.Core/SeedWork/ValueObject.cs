@@ -7,6 +7,9 @@ namespace Abner.Domain.Core
 {
     /// https://docs.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/implement-value-objects
     /// https://enterprisecraftsmanship.com/posts/value-object-better-implementation/
+    /// <summary>
+    /// 值对象
+    /// </summary>
     public abstract class ValueObject
     {
         public override bool Equals(object obj)

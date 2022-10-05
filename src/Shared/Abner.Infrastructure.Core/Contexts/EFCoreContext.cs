@@ -12,7 +12,10 @@ public abstract class EFCoreContext : DbContext, IUnitOfWork
     private IDbContextTransaction? _currentTransaction;
 
     // 属性注入
+    [PropertyInjection]
     protected IMediator Mediator { get;  set; }
+
+    [PropertyInjection]
     protected ICapPublisher CapPublisher { get;  set; }
 
     public EFCoreContext(DbContextOptions options)

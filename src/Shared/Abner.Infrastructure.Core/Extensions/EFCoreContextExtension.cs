@@ -9,7 +9,7 @@ public static class EFCoreContextExtension
     public static void EnableGloableSoftDeleteQueryFilter(this ModelBuilder builder)
     {
         var softDeletes = builder.Model.GetEntityTypes()
-            .Where(t => t.ClrType.IsAssignableTo(typeof(ISoftDelete)));
+            .Where(t => t.ClrType.IsAssignableTo(typeof(ISoftDelete)) && !t.ClrType.IsAssignableTo(typeof(IHardDelete)));
 
         foreach (var entityType in softDeletes)
         {

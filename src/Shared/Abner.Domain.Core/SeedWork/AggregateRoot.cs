@@ -39,10 +39,10 @@ namespace Abner.Domain.Core
         public TKey CreatorId { get; private set; }
 
         public DateTime? ModificationTime { get; private set; }
-        public TKey ModificatorId { get; private set; }
+        public TKey? ModificatorId { get; private set; }
 
         public DateTime? DeletionTime { get; private set; }
-        public TKey DeletorId { get; private set; }
+        public TKey? DeletorId { get; private set; }
 
         public bool IsDeleted { get; private set; }
 

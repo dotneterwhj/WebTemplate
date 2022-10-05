@@ -5,9 +5,16 @@ using System.Threading.Tasks;
 
 namespace Abner.Domain.Core
 {
+    /// <summary>
+    /// 仓储标记接口
+    /// </summary>
     public interface IRepository
     { }
 
+    /// <summary>
+    /// 基础仓储 包含增删改查
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
     public interface IRepository<TEntity> : IRepository, IReadOnlyRepository<TEntity>
         where TEntity : class, IEntity
     {

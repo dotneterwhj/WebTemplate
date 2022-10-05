@@ -4,21 +4,22 @@ using System.Linq.Expressions;
 
 namespace Abner.Infrastructure.Core;
 
-public abstract class RepositoryBase<TEntity> : IRepository<TEntity>
+public abstract class RepositoryBase<TDbContext, TEntity> : IRepository<TEntity>
     where TEntity : class, IEntity
+    where TDbContext : EFCoreContext
 {
-    protected virtual EFCoreContext DbContext { get; set; }
+    protected virtual TDbContext DbContext { get; set; }
 
     public virtual IUnitOfWork UnitOfWork => DbContext;
 
     protected virtual IGuidGenerator GuidGenerator { get; set; } = new SimpleGuidGenerator();
 
-    public RepositoryBase(EFCoreContext dbContext)
+    public RepositoryBase(TDbContext dbContext)
     {
         DbContext = dbContext;
     }
 
-    protected virtual EFCoreContext GetDbContext()
+    protected virtual TDbContext GetDbContext()
     {
         return DbContext;
     }
@@ -168,10 +169,11 @@ public abstract class RepositoryBase<TEntity> : IRepository<TEntity>
 }
 
 
-public abstract class RepositoryBase<TKey, TEntity> : RepositoryBase<TEntity>, IRepository<TKey, TEntity>
+public abstract class RepositoryBase<TDbContext, TKey, TEntity> : RepositoryBase<TDbContext, TEntity>, IRepository<TKey, TEntity>
     where TEntity : class, IEntity<TKey>
+    where TDbContext : EFCoreContext
 {
-    protected RepositoryBase(EFCoreContext dbContext) : base(dbContext)
+    protected RepositoryBase(TDbContext dbContext) : base(dbContext)
     {
     }
 

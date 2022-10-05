@@ -23,14 +23,18 @@ public class WeatherForecastController : ControllerBase
     }
 
     [HttpGet(Name = "GetWeatherForecast")]
-    public IEnumerable<WeatherForecast> Get()
+    public async Task<IActionResult> Get(CancellationToken cancellationToken)
     {
-        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-        {
-            Date = DateTime.Now.AddDays(index),
-            TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-        })
-        .ToArray();
+        var blogs = await _repository.GetListAsync(cancellationToken: cancellationToken);
+        return Ok(blogs);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Post(CancellationToken cancellationToken)
+    {
+        var blog = await _repository.InsertAsync(Blog.Create("test", "test desc"), cancellationToken);
+        await _repository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
+
+        return Ok(blog);
     }
 }

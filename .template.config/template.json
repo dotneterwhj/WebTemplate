@@ -5,7 +5,7 @@
         "Web/WebAPI"
     ],
     "identity": "Abner.WebTemplate.CSharp",
-    "name": "ASP.NET Core Abner Web Application",
+    "name": "ASP.NET Core Clean Architecture Web Application",
     "shortName": "abner",
     "tags": {
         "language": "C#",

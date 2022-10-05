@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace Abner.Domain.Core
 {
     /// <summary>
-    /// 聚合根
+    /// 聚合根标记接口
     /// </summary>
     public interface IAggregateRoot : IEntity
     { }

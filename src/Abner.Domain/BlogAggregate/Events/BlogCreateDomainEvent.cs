@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Abner.Domain.BlogAggregate.Events
 {
-    public class BlogCreateDomainEvent : DomainEvent
+    public class BlogCreateDomainEvent : IDomainEvent
     {
         public BlogCreateDomainEvent(Blog blog)
         {
