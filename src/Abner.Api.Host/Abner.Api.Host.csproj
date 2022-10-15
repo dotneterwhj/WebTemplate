@@ -12,8 +12,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Abner.Application\Abner.Application.csproj" />
     <ProjectReference Include="..\Abner.EntityFrameworkCore\Abner.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Shared\Abner.Infrastructure.Core\Abner.Infrastructure.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Controllers\BlogController.cs~" />
   </ItemGroup>
 
 </Project>

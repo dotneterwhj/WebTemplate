@@ -14,8 +14,13 @@ internal class RepositoryModule : Autofac.Module
 {
     protected override void Load(ContainerBuilder builder)
     {
-        // var conStr = "Database=abner;Data Source=127.0.0.1;User Id=root;Password=1q2w3E$;CharSet=utf8;port=3306";
-        var conStr = "Database=abner;Data Source=127.0.0.1;User Id=root;Password=123456;CharSet=utf8;port=3307";
+        var configuration = new ConfigurationBuilder()
+            .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../Abner.Api.Host/"))
+            .AddJsonFile("appsettings.json", optional: false)
+            .Build();
+
+        var conStr = configuration.GetConnectionString("Default");
+        
         var optionsBuilder = new DbContextOptionsBuilder<BlogContext>();
         optionsBuilder.UseMySql(conStr, ServerVersion.AutoDetect(conStr));
 

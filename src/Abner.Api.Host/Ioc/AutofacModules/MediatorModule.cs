@@ -87,7 +87,7 @@ internal class MediatorModule : Autofac.Module
 
         builder.RegisterGeneric(typeof(LoggingBehavior<,>)).As(typeof(IPipelineBehavior<,>));
         builder.RegisterGeneric(typeof(ValidatorBehavior<,>)).As(typeof(IPipelineBehavior<,>));
-        builder.RegisterGeneric(typeof(TransactionBehaviour<,>)).As(typeof(IPipelineBehavior<,>));
+        builder.RegisterGeneric(typeof(TransactionBehaviour<,,>)).As(typeof(IPipelineBehavior<,>));
     }
 
     private class ScopedContravariantRegistrationSource : IRegistrationSource
@@ -104,7 +104,8 @@ internal class MediatorModule : Autofac.Module
             _types.AddRange(types);
         }
 
-        public IEnumerable<IComponentRegistration> RegistrationsFor(Service service, Func<Service, IEnumerable<ServiceRegistration>> registrationAccessor)
+        public IEnumerable<IComponentRegistration> RegistrationsFor(Service service,
+            Func<Service, IEnumerable<ServiceRegistration>> registrationAccessor)
         {
             var components = _source.RegistrationsFor(service, registrationAccessor);
             foreach (var c in components)
@@ -135,5 +136,4 @@ internal class MediatorModule : Autofac.Module
             return result.Length > 0 ? result : throw new NoConstructorsFoundException(targetType);
         }
     }
-
 }

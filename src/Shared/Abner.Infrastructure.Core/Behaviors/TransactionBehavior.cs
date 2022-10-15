@@ -5,19 +5,22 @@ using Microsoft.Extensions.Logging;
 
 namespace Abner.Infrastructure.Core;
 
-public class TransactionBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
+public class TransactionBehaviour<TDbContext, TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    where TRequest : IRequest<TResponse>
+    where TDbContext : EFCoreContext
 {
-    private readonly ILogger<TransactionBehaviour<TRequest, TResponse>> _logger;
-    private readonly EFCoreContext _dbContext;
+    private readonly ILogger<TransactionBehaviour<TDbContext, TRequest, TResponse>> _logger;
+    private readonly TDbContext _dbContext;
 
-    public TransactionBehaviour(EFCoreContext dbContext,
-        ILogger<TransactionBehaviour<TRequest, TResponse>> logger)
+    public TransactionBehaviour(TDbContext dbContext,
+        ILogger<TransactionBehaviour<TDbContext, TRequest, TResponse>> logger)
     {
-        _dbContext = dbContext ?? throw new ArgumentException(nameof(EFCoreContext));
+        _dbContext = dbContext ?? throw new ArgumentException(nameof(TDbContext));
         _logger = logger ?? throw new ArgumentException(nameof(ILogger));
     }
 
-    public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+    public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken,
+        RequestHandlerDelegate<TResponse> next)
     {
         var response = default(TResponse);
         var typeName = request.GetGenericTypeName();
@@ -39,11 +42,13 @@ public class TransactionBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequ
                 //using (LogContext.PushProperty("TransactionContext", transaction.TransactionId))
                 using (_logger.BeginScope("TransactionContext:{TransactionId}", transaction.TransactionId))
                 {
-                    _logger.LogInformation("----- Begin transaction {TransactionId} for {CommandName} ({@Command})", transaction.TransactionId, typeName, request);
+                    _logger.LogInformation("----- Begin transaction {TransactionId} for {CommandName} ({@Command})",
+                        transaction.TransactionId, typeName, request);
 
                     response = await next();
 
-                    _logger.LogInformation("----- Commit transaction {TransactionId} for {CommandName}", transaction.TransactionId, typeName);
+                    _logger.LogInformation("----- Commit transaction {TransactionId} for {CommandName}",
+                        transaction.TransactionId, typeName);
 
                     await _dbContext.CommitTransactionAsync(transaction);
 

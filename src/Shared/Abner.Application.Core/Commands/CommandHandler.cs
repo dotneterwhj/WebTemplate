@@ -15,8 +15,7 @@ public abstract class CommandHandler<TCommand> : IRequestHandler<TCommand>
         return Unit.Task;
     }
 
-    public abstract void Handle(TCommand request);
-
+    protected abstract void Handle(TCommand request);
 }
 
 public abstract class CommandHandler<TCommand, TResult> : IRequestHandler<TCommand, TResult>
@@ -26,12 +25,11 @@ public abstract class CommandHandler<TCommand, TResult> : IRequestHandler<TComma
     {
         if (request.IsValid())
         {
-            return Task.FromResult(Handle(request));
+            return Handle(request);
         }
 
         return Task.FromResult(default(TResult));
     }
 
-    public abstract TResult Handle(TCommand request);
-
+    protected abstract Task<TResult> Handle(TCommand request);
 }

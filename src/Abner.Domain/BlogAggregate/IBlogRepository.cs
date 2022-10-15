@@ -2,7 +2,7 @@
 
 namespace Abner.Domain.BlogAggregate
 {
-    public interface IBlogRepository : IRepository<Blog>
+    public interface IBlogRepository : IRepository<Guid, Blog>
     {
     }
 }

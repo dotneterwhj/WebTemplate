@@ -4,7 +4,7 @@ using Abner.Infrastructure.Core;
 
 namespace Abner.EntityFrameworkCore.Repositories
 {
-    public class BlogRepository : RepositoryBase<BlogContext, Blog>, IBlogRepository
+    public class BlogRepository : RepositoryBase<BlogContext, Guid, Blog>, IBlogRepository
     {
         public BlogRepository(BlogContext dbContext) : base(dbContext)
         {
