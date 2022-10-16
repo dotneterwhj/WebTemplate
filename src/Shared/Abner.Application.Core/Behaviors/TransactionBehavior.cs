@@ -50,7 +50,7 @@ public class TransactionBehaviour<TDbContext, TRequest, TResponse> : IPipelineBe
                     _logger.LogInformation("----- Commit transaction {TransactionId} for {CommandName}",
                         transaction.TransactionId, typeName);
 
-                    await _dbContext.CommitTransactionAsync(transaction);
+                    await _dbContext.CommitTransactionAsync(transaction, cancellationToken);
 
                     transactionId = transaction.TransactionId;
                 }
