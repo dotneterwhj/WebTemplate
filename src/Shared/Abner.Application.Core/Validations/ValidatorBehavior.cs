@@ -39,7 +39,7 @@ public class ValidatorBehavior<TCommand, TResult> : IPipelineBehavior<TCommand, 
 
             throw new InvalidCommandException(
                 $"Command Validation Errors for type {typeof(TCommand).Name}",
-                new ValidationException("Validation exception", failures));
+                string.Join(Environment.NewLine, failures?.Select(f => f.ToString())));
         }
 
         var response = await next();

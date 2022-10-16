@@ -2,14 +2,20 @@
 
 public class InvalidCommandException : Exception
 {
-    public InvalidCommandException()
-    { }
+    public string? Details { get; }
 
-    public InvalidCommandException(string message)
+    public InvalidCommandException()
+    {
+    }
+
+    public InvalidCommandException(string message, string? details = null)
         : base(message)
-    { }
+    {
+        Details = details;
+    }
 
     public InvalidCommandException(string message, Exception innerException)
         : base(message, innerException)
-    { }
+    {
+    }
 }

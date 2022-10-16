@@ -1,4 +1,5 @@
-﻿using Abner.Application.BlogApp;
+﻿using Abner.Api.Host.SeedWork;
+using Abner.Application.BlogApp;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,6 +16,14 @@ public class BlogController : ControllerBase
         _mediator = mediator;
     }
 
+    [HttpGet]
+    public async Task<IActionResult> QueryBlog([FromQuery] Pager pager, CancellationToken cancellationToken)
+    {
+        var resposnse = await _mediator.Send(new BlogPageQuery(pager.PageIndex, pager.PageSize), cancellationToken);
+
+        return Ok(resposnse);
+    }
+
     // GET
     [HttpGet("{id}")]
     public async Task<IActionResult> QueryBlog(Guid id, CancellationToken cancellationToken)
@@ -28,7 +37,8 @@ public class BlogController : ControllerBase
     public async Task<IActionResult> CreateBlog([FromBody] BlogCreateRequest request,
         CancellationToken cancellationToken)
     {
-        var response = await _mediator.Send(new BlogCreateCommand(request.Title, request.Description), cancellationToken);
+        var response =
+            await _mediator.Send(new BlogCreateCommand(request.Title, request.Description), cancellationToken);
 
         return Ok(response);
     }

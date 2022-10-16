@@ -2,7 +2,7 @@
 
 namespace Abner.Application.BlogApp;
 
-public class BlogQuery : QueryBase<BlogDto>
+public class BlogQuery : Query<BlogDto>
 {
     public Guid Id { get; set; }
 }
