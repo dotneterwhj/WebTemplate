@@ -14,7 +14,7 @@ public class BlogQueryHandler : IQueryHandler<BlogQuery, BlogDto>
 
     public async Task<BlogDto> Handle(BlogQuery request, CancellationToken cancellationToken)
     {
-        var blog = await _blogRepository.FindAsync(request.Id, cancellationToken: cancellationToken);
+        var blog = await _blogRepository.GetAsync(request.Id, cancellationToken: cancellationToken);
 
         // TODO Automapper
         var blogDto = new BlogDto()

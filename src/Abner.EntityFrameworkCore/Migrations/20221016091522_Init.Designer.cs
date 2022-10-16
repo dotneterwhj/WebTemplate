@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Abner.EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(BlogContext))]
-    [Migration("20221016014225_Init")]
+    [Migration("20221016091522_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,14 +30,15 @@ namespace Abner.EntityFrameworkCore.Migrations
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<Guid>("CreatorId")
-                        .HasColumnType("char(36)");
+                    b.Property<string>("CreatorId")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<DateTime?>("DeletionTime")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<Guid>("DeletorId")
-                        .HasColumnType("char(36)");
+                    b.Property<string>("DeletorId")
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -49,8 +50,8 @@ namespace Abner.EntityFrameworkCore.Migrations
                     b.Property<DateTime?>("ModificationTime")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<Guid>("ModificatorId")
-                        .HasColumnType("char(36)");
+                    b.Property<string>("ModificatorId")
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Title")
                         .IsRequired()

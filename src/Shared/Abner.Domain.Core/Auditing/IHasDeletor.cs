@@ -5,12 +5,8 @@ using System.Threading.Tasks;
 
 namespace Abner.Domain.Core
 {
-    public interface IHasDeletor : IHasDeletor<int>, IHasDeletionTime
+    public interface IHasDeletor : IHasDeletionTime
     {
-    }
-
-    public interface IHasDeletor<T> : IHasDeletionTime
-    {
-        T DeletorId { get; }
+        string? DeletorId { get; }
     }
 }

@@ -3,7 +3,7 @@ using Abner.Domain.Core;
 
 namespace Abner.Domain.BlogAggregate;
 
-public class Blog : AggregateRoot<Guid>
+public class Blog : FullAuditAggregateRoot<Guid>
 {
     public string Title { get; private set; }
     public string Description { get; private set; }

@@ -42,4 +42,14 @@ public class BlogController : ControllerBase
 
         return Ok(response);
     }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteBlog(Guid id,
+        CancellationToken cancellationToken)
+    {
+        var response =
+            await _mediator.Send(new BlogDeleteCommand(id), cancellationToken);
+
+        return Ok(response);
+    }
 }

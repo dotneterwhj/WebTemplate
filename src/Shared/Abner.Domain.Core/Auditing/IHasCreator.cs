@@ -5,12 +5,8 @@ using System.Threading.Tasks;
 
 namespace Abner.Domain.Core
 {
-    public interface IHasCreator : IHasCreator<int>, IHasCreationTime
+    public interface IHasCreator : IHasCreationTime
     {
-    }
-
-    public interface IHasCreator<T> : IHasCreationTime
-    {
-        T CreatorId { get; }
+        string CreatorId { get; }
     }
 }

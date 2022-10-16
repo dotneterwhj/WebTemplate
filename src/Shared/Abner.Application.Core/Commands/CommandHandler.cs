@@ -9,11 +9,11 @@ public abstract class CommandHandler<TCommand> : IRequestHandler<TCommand>
     {
         // if (request.IsValid())
         // {
-            // Handle(request);
+        // Handle(request);
         // }
-        
+
         Handle(request);
-        
+
         return Unit.Task;
     }
 
@@ -27,9 +27,9 @@ public abstract class CommandHandler<TCommand, TResult> : IRequestHandler<TComma
     {
         // if (request.IsValid())
         // {
-            // return Handle(request);
+        // return Handle(request);
         // }
-        
+
         var response = Handle(request);
 
         return Task.FromResult(response);

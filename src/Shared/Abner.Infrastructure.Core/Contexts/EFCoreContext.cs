@@ -13,7 +13,9 @@ public abstract class EFCoreContext : DbContext, IUnitOfWork
     // 属性注入
     [PropertyInjection] protected IMediator Mediator { get; set; }
 
-    [PropertyInjection] protected ICapPublisher CapPublisher { get; set; }
+    [PropertyInjection] protected ICapPublisher? CapPublisher { get; set; }
+
+    [PropertyInjection] protected ICurrentUser? CurrentUser { get; set; }
 
     public EFCoreContext(DbContextOptions options)
         //IMediator mediator,
@@ -138,11 +140,34 @@ public abstract class EFCoreContext : DbContext, IUnitOfWork
 
     private void OnBeforeSaving()
     {
+        // 自动审计
+        var fullAuditEntities = ChangeTracker.Entries<Entity>()
+            .Where(e => e.Entity.GetType().IsAssignableFrom(typeof(FullAuditAggregateRoot)) ||
+                        !e.Entity.GetType().IsAssignableFrom(typeof(FullAuditAggregateRoot<>)));
+        foreach (var entry in fullAuditEntities)
+        {
+            switch (entry.State)
+            {
+                case EntityState.Added:
+                    entry.CurrentValues[nameof(IFullAuditable.CreatorId)] =
+                        CurrentUser?.UserId ?? _currentTransaction.TransactionId.ToString();
+                    entry.CurrentValues[nameof(IFullAuditable.CreationTime)] = DateTime.Now;
+                    break;
+                case EntityState.Modified:
+                    entry.CurrentValues[nameof(IFullAuditable.ModificatorId)] = CurrentUser?.UserId;
+                    entry.CurrentValues[nameof(IFullAuditable.ModificationTime)] = DateTime.Now;
+                    break;
+                case EntityState.Deleted:
+                    entry.CurrentValues[nameof(IFullAuditable.DeletorId)] = CurrentUser?.UserId;
+                    entry.CurrentValues[nameof(IFullAuditable.DeletionTime)] = DateTime.Now;
+                    break;
+            }
+        }
+
         // 标记软删除但未标记硬删除
         var softDeletes = ChangeTracker.Entries<Entity>()
             .Where(e => e.Entity.GetType().IsAssignableTo(typeof(ISoftDelete)) &&
                         !e.Entity.GetType().IsAssignableTo(typeof(IHardDelete)));
-
         foreach (var entry in softDeletes)
         {
             switch (entry.State)
