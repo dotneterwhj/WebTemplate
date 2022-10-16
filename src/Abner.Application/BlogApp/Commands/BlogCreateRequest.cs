@@ -1,4 +1,4 @@
-﻿namespace Abner.Application.Blog;
+﻿namespace Abner.Application.BlogApp;
 
 public class BlogCreateRequest
 {

@@ -1,9 +1,9 @@
-﻿using Abner.Application.Core;
+﻿using Abner.Infrastructure.Core;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace Abner.Infrastructure.Core;
+namespace Abner.Application.Core;
 
 public class TransactionBehaviour<TDbContext, TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
@@ -27,6 +27,12 @@ public class TransactionBehaviour<TDbContext, TRequest, TResponse> : IPipelineBe
 
         try
         {
+            // TODO 查询不开启事务
+            // if (typeof(IQuery<>).IsAssignableFrom(request.GetType()))
+            // {
+            //     return await next();
+            // }
+
             if (_dbContext.HasActiveTransaction)
             {
                 return await next();

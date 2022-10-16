@@ -14,7 +14,7 @@ public abstract class Command : ICommand
         this._commandId = id;
     }
 
-    public abstract bool IsValid();
+    // public abstract bool IsValid();
 }
 
 public abstract class Command<TResult> : ICommand<TResult>
@@ -31,5 +31,5 @@ public abstract class Command<TResult> : ICommand<TResult>
         this._commandId = id;
     }
 
-    public abstract bool IsValid();
+    // public abstract bool IsValid();
 }

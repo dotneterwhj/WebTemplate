@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Abner.Domain.Core\Abner.Domain.Core.csproj" />
+    <ProjectReference Include="..\Abner.Infrastructure.Core\Abner.Infrastructure.Core.csproj" />
   </ItemGroup>
 
 </Project>

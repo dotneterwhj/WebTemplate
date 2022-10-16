@@ -1,9 +1,9 @@
 ﻿using Abner.Application.Core;
 using Abner.Domain.BlogAggregate;
 
-namespace Abner.Application.Blog;
+namespace Abner.Application.BlogApp;
 
-public class BlogCreateCommandHandler : CommandHandler<BlogCreateCommand, BlogDto>
+public class BlogCreateCommandHandler : ICommandHandler<BlogCreateCommand, BlogDto>
 {
     private readonly IBlogRepository _blogRepository;
 
@@ -12,10 +12,10 @@ public class BlogCreateCommandHandler : CommandHandler<BlogCreateCommand, BlogDt
         _blogRepository = blogRepository;
     }
 
-    protected override async Task<BlogDto> Handle(BlogCreateCommand request)
+    public async Task<BlogDto> Handle(BlogCreateCommand request, CancellationToken cancellationToken)
     {
         var blog = Domain.BlogAggregate.Blog.Create(request.Title, request.Description);
-        var entity = await _blogRepository.InsertAsync(blog);
+        var entity = await _blogRepository.InsertAsync(blog, cancellationToken);
 
         var blogDto = new BlogDto() { Title = entity.Title, Description = entity.Description, Id = entity.Id };
         return blogDto;

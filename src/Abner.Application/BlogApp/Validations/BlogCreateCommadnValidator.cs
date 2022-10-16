@@ -1,6 +1,13 @@
-﻿namespace Abner.Application.BlogApp.Validations;
+﻿using Abner.Application.Core;
+using FluentValidation;
 
-public class BlogCreateCommadnValidator
+namespace Abner.Application.BlogApp;
+
+public class BlogCreateCommadnValidator : CommandValidator<BlogCreateCommand>
 {
-    
+    public BlogCreateCommadnValidator()
+    {
+        RuleFor(b => b.Description).NotEmpty();
+        RuleFor(b => b.Title).NotEmpty();
+    }
 }

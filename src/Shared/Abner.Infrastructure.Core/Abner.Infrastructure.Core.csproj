@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<ItemGroup>
-		<ProjectReference Include="..\Abner.Application.Core\Abner.Application.Core.csproj" />
 		<ProjectReference Include="..\Abner.Domain.Core\Abner.Domain.Core.csproj" />
 	</ItemGroup>
 

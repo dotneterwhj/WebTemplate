@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 namespace Abner.Application.Core;
 
 public class ValidatorBehavior<TCommand, TResult> : IPipelineBehavior<TCommand, TResult>
-    where TCommand : Command<TResult>
+    where TCommand : IRequest<TResult>
 {
     private readonly ILogger<ValidatorBehavior<TCommand, TResult>> _logger;
     private readonly IEnumerable<IValidator<TCommand>> _validators;
@@ -19,7 +19,8 @@ public class ValidatorBehavior<TCommand, TResult> : IPipelineBehavior<TCommand, 
         _logger = logger;
     }
 
-    public async Task<TResult> Handle(TCommand request, CancellationToken cancellationToken, RequestHandlerDelegate<TResult> next)
+    public async Task<TResult> Handle(TCommand request, CancellationToken cancellationToken,
+        RequestHandlerDelegate<TResult> next)
     {
         var typeName = request.GetGenericTypeName();
 
@@ -33,12 +34,18 @@ public class ValidatorBehavior<TCommand, TResult> : IPipelineBehavior<TCommand, 
 
         if (failures.Any())
         {
-            _logger.LogWarning("Validation errors - {CommandType} - Command: {@Command} - Errors: {@ValidationErrors}", typeName, request, failures);
+            _logger.LogWarning("Validation errors - {CommandType} - Command: {@Command} - Errors: {@ValidationErrors}",
+                typeName, request, failures);
 
-            throw new DomainException(
-                $"Command Validation Errors for type {typeof(TCommand).Name}", new ValidationException("Validation exception", failures));
+            throw new InvalidCommandException(
+                $"Command Validation Errors for type {typeof(TCommand).Name}",
+                new ValidationException("Validation exception", failures));
         }
 
-        return await next();
+        var response = await next();
+
+        _logger.LogInformation("----- command {CommandType} Validated", typeName);
+
+        return response;
     }
 }

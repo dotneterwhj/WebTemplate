@@ -1,8 +1,7 @@
-﻿using Abner.Application.Core;
-using MediatR;
+﻿using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Abner.Infrastructure.Core;
+namespace Abner.Application.Core;
 
 public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>

@@ -8,6 +8,8 @@ using FluentValidation;
 using MediatR;
 using System.Collections.Concurrent;
 using System.Reflection;
+using Abner.Application.Behaviors;
+using Abner.Application.BlogApp;
 
 namespace Abner.Api.Host;
 
@@ -70,7 +72,7 @@ internal class MediatorModule : Autofac.Module
         foreach (var mediatrOpenType in mediatrOpenTypes)
         {
             builder
-                .RegisterAssemblyTypes(ThisAssembly)
+                .RegisterAssemblyTypes(ThisAssembly, typeof(BlogQuery).Assembly)
                 .AsClosedTypesOf(mediatrOpenType)
                 .FindConstructorsWith(new AllConstructorFinder())
                 .AsImplementedInterfaces();
@@ -87,7 +89,8 @@ internal class MediatorModule : Autofac.Module
 
         builder.RegisterGeneric(typeof(LoggingBehavior<,>)).As(typeof(IPipelineBehavior<,>));
         builder.RegisterGeneric(typeof(ValidatorBehavior<,>)).As(typeof(IPipelineBehavior<,>));
-        builder.RegisterGeneric(typeof(TransactionBehaviour<,,>)).As(typeof(IPipelineBehavior<,>));
+        // builder.RegisterGeneric(typeof(TransactionBehaviour<,,>)).As(typeof(IPipelineBehavior<,>));
+        builder.RegisterGeneric(typeof(BlogContextTransactionBehavior<,>)).As(typeof(IPipelineBehavior<,>));
     }
 
     private class ScopedContravariantRegistrationSource : IRegistrationSource

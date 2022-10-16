@@ -10,19 +10,19 @@ public class Blog : AggregateRoot<Guid>
 
     protected Blog()
     {
+    }
+
+    public Blog(string title, string description)
+    {
+        Title = title;
+        Description = description;
+        Id = Guid.NewGuid();
         AddDomainEvent(new BlogCreateDomainEvent(this));
     }
 
     public static Blog Create(string title, string description)
     {
-        var blog = new Blog
-        {
-            Title = title,
-            Description = description,
-            Id = Guid.NewGuid()
-        };
-
+        var blog = new Blog(title, description);
         return blog;
     }
-
 }

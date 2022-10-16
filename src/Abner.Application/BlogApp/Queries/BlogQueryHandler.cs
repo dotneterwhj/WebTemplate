@@ -1,7 +1,7 @@
 ﻿using Abner.Application.Core;
 using Abner.Domain.BlogAggregate;
 
-namespace Abner.Application.Blog;
+namespace Abner.Application.BlogApp;
 
 public class BlogQueryHandler : IQueryHandler<BlogQuery, BlogDto>
 {

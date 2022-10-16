@@ -1,6 +1,6 @@
 ﻿using Abner.Application.Core;
 
-namespace Abner.Application.Blog;
+namespace Abner.Application.BlogApp;
 
 public class BlogCreateCommand : Command<BlogDto>
 {
@@ -8,8 +8,9 @@ public class BlogCreateCommand : Command<BlogDto>
 
     public string Title { get; set; }
 
-    public override bool IsValid()
+    public BlogCreateCommand(string title, string description)
     {
-        throw new NotImplementedException();
+        Title = title;
+        Description = description;
     }
 }

@@ -8,15 +8,12 @@ namespace Abner.Infrastructure.Core;
 
 public abstract class EFCoreContext : DbContext, IUnitOfWork
 {
-
     private IDbContextTransaction? _currentTransaction;
 
     // 属性注入
-    [PropertyInjection]
-    protected IMediator Mediator { get;  set; }
+    [PropertyInjection] protected IMediator Mediator { get; set; }
 
-    [PropertyInjection]
-    protected ICapPublisher CapPublisher { get;  set; }
+    [PropertyInjection] protected ICapPublisher CapPublisher { get; set; }
 
     public EFCoreContext(DbContextOptions options)
         //IMediator mediator,
@@ -38,10 +35,11 @@ public abstract class EFCoreContext : DbContext, IUnitOfWork
         if (HasActiveTransaction) return Task.FromResult(_currentTransaction!);
 
         // this.Database.BeginTransaction()
-        this._currentTransaction = this.Database.BeginTransaction(CapPublisher, autoCommit: false);
+        this._currentTransaction = this.Database.BeginTransaction();
+        // 启用Cap框架
+        // this._currentTransaction = this.Database.BeginTransaction(CapPublisher, autoCommit: false);
 
         return Task.FromResult(_currentTransaction);
-
     }
 
     public void RollbackTransaction()
@@ -60,10 +58,12 @@ public abstract class EFCoreContext : DbContext, IUnitOfWork
         }
     }
 
-    public async Task CommitTransactionAsync(IDbContextTransaction transaction, CancellationToken cancellationToken = default(CancellationToken))
+    public async Task CommitTransactionAsync(IDbContextTransaction transaction,
+        CancellationToken cancellationToken = default(CancellationToken))
     {
         if (transaction == null) throw new ArgumentNullException(nameof(transaction));
-        if (transaction != _currentTransaction) throw new InvalidOperationException($"Transaction {transaction.TransactionId} is not current");
+        if (transaction != _currentTransaction)
+            throw new InvalidOperationException($"Transaction {transaction.TransactionId} is not current");
 
         try
         {
@@ -123,7 +123,8 @@ public abstract class EFCoreContext : DbContext, IUnitOfWork
         return base.SaveChanges(acceptAllChangesOnSuccess);
     }
 
-    public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+    public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess,
+        CancellationToken cancellationToken = default)
     {
         OnBeforeSaving();
         return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
@@ -139,7 +140,8 @@ public abstract class EFCoreContext : DbContext, IUnitOfWork
     {
         // 标记软删除但未标记硬删除
         var softDeletes = ChangeTracker.Entries<Entity>()
-            .Where(e => e.Entity.GetType().IsAssignableTo(typeof(ISoftDelete)) && !e.Entity.GetType().IsAssignableTo(typeof(IHardDelete)));
+            .Where(e => e.Entity.GetType().IsAssignableTo(typeof(ISoftDelete)) &&
+                        !e.Entity.GetType().IsAssignableTo(typeof(IHardDelete)));
 
         foreach (var entry in softDeletes)
         {

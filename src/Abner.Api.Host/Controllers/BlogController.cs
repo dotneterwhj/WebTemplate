@@ -1,4 +1,4 @@
-﻿using Abner.Application.Blog;
+﻿using Abner.Application.BlogApp;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,7 +28,7 @@ public class BlogController : ControllerBase
     public async Task<IActionResult> CreateBlog([FromBody] BlogCreateRequest request,
         CancellationToken cancellationToken)
     {
-        var response = _mediator.Send(new BlogCreateCommand(), cancellationToken);
+        var response = await _mediator.Send(new BlogCreateCommand(request.Title, request.Description), cancellationToken);
 
         return Ok(response);
     }

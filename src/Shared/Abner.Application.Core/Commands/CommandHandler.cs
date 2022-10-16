@@ -7,11 +7,13 @@ public abstract class CommandHandler<TCommand> : IRequestHandler<TCommand>
 {
     public Task<Unit> Handle(TCommand request, CancellationToken cancellationToken)
     {
-        if (request.IsValid())
-        {
-            Handle(request);
-        }
-
+        // if (request.IsValid())
+        // {
+            // Handle(request);
+        // }
+        
+        Handle(request);
+        
         return Unit.Task;
     }
 
@@ -23,13 +25,15 @@ public abstract class CommandHandler<TCommand, TResult> : IRequestHandler<TComma
 {
     public Task<TResult> Handle(TCommand request, CancellationToken cancellationToken)
     {
-        if (request.IsValid())
-        {
-            return Handle(request);
-        }
+        // if (request.IsValid())
+        // {
+            // return Handle(request);
+        // }
+        
+        var response = Handle(request);
 
-        return Task.FromResult(default(TResult));
+        return Task.FromResult(response);
     }
 
-    protected abstract Task<TResult> Handle(TCommand request);
+    protected abstract TResult Handle(TCommand request);
 }
